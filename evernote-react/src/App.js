@@ -40,9 +40,9 @@ class App extends React.Component {
           return data;
         });
 
-        this.setState({
-          notes: notes
-        });
+        console.log(notes);
+        
+        this.setState({ notes: notes });
 
       });
   }
