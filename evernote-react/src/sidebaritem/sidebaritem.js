@@ -16,7 +16,7 @@ class SidebarItemComponent extends React.Component {
       <div key={_index}>
         <ListItem
           className={classes.listItem}
-          selected={this.selectedNoteIndex === _index}
+          selected={selectedNoteIndex === _index}
           alignItems='flex-start'>
           
           <div 
@@ -35,6 +35,7 @@ class SidebarItemComponent extends React.Component {
   }
 
   selectNote = (note, index) => this.props.selectNote(note, index);
+
   deleteNote = (note) => {
     if ( window.confirm(`Are you sure you want to delete: ${note.title}`) ) {
       this.props.deleteNote(note);
