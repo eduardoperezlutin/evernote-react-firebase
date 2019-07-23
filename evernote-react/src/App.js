@@ -102,6 +102,41 @@ class App extends React.Component {
     });
 
   }
+
+  deleteNote = async (note) => {
+    const noteIndex = this.state.notes.indexOf(note);
+
+    await this.setState({
+      notes: this.state.notes.filter(_note => _note !== note)
+    })
+    
+    // manage note selection after deletion
+    if ( this.state.selectedNoteIndex === noteIndex ) {
+      // note requested to delete is the selected note
+      this.setState({
+        selectedNoteIndex: null,
+        selectedNote: null
+      });
+    } else {
+      // note requested to delete is other than selected note
+      if ( this.state.notes.length > 1 ) {
+        // if >1 notes: decrease selectedNoteIndex
+        this.selectNote( this.state.notes[this.state.selectedNoteIndex - 1],this.state.selectedNoteIndex -1 );
+      } else {
+        this.setState({ 
+          selectedNoteIndex: null,
+          selectedNote: null
+        })
+      }
+    }
+
+    firebase
+      .firestore()
+      .collection('notes')
+      .doc(note.id)
+      .delete();
+
+  }
 }
 
 export default App;
